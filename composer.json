@@ -1,0 +1,17 @@
+{
+    "name": "izisaurio/lite-request",
+    "description": "A simple PHP requester",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "izisaurio",
+            "email": "izi.isaac@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LiteRequest\\": "lib/"
+        }
+    }
+}
