@@ -2,6 +2,12 @@
 
 namespace LiteRequest;
 
+/**
+ * Curl request
+ * 
+ * @author	izisaurio
+ * @version	1
+ */
 class Request
 {
 	/**
@@ -163,7 +169,7 @@ class Request
 	 */
 	public function postfields(array $fields)
 	{
-		$this->options[CURLOPT_POSTFIELDS] = http_build_query($fields);
+		$this->options[CURLOPT_POSTFIELDS] = \http_build_query($fields);
 		return $this;
 	}
 
@@ -176,7 +182,7 @@ class Request
 	 */
 	public function postbody(array $json)
 	{
-		$this->options[CURLOPT_POSTFIELDS] = json_encode($json);
+		$this->options[CURLOPT_POSTFIELDS] = \json_encode($json);
 		return $this;
 	}
 
@@ -188,8 +194,8 @@ class Request
 	 */
 	public function exec()
 	{
-		$this->curl = curl_init($this->url);
-		curl_setopt_array($this->curl, $this->options);
+		$this->curl = \curl_init($this->url);
+		\curl_setopt_array($this->curl, $this->options);
 		return new Response($this->curl);
 	}
 }

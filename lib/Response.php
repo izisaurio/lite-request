@@ -54,14 +54,14 @@ class Response
 	public function __construct($curl)
 	{
 		$this->curl = $curl;
-		curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, [
+		\curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, [
 			$this,
 			'parseHeader',
 		]);
-		$this->body = curl_exec($this->curl);
+		$this->body = \curl_exec($this->curl);
 		if ($this->body === false) {
-			$this->errorNo = curl_errno($this->curl);
-			$this->error = curl_error($this->curl);
+			$this->errorNo = \curl_errno($this->curl);
+			$this->error = \curl_error($this->curl);
 		}
 	}
 
@@ -73,7 +73,7 @@ class Response
 	 */
 	public function json()
 	{
-		return json_decode($this->body, true);
+		return \json_decode($this->body, true);
 	}
 
 	/**
@@ -86,12 +86,12 @@ class Response
 	 */
 	private function parseHeader($curl, $header)
 	{
-		$length = strlen($header);
-		if (strpos($header, ':') === false) {
+		$length = \strlen($header);
+		if (\strpos($header, ':') === false) {
 			return $length;
 		}
-		list($key, $value) = explode(':', $header, 2);
-		$this->headers[strtolower(trim($key))] = trim($value);
+		list($key, $value) = \explode(':', $header, 2);
+		$this->headers[\strtolower(\trim($key))] = \trim($value);
 		return $length;
 	}
 }
