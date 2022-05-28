@@ -151,6 +151,7 @@ class Request
 	public function headers(array $headers)
 	{
 		$this->options[CURLOPT_HTTPHEADER] = $headers;
+		return $this;
 	}
 
 	/**
@@ -163,6 +164,20 @@ class Request
 	public function postfields(array $fields)
 	{
 		$this->options[CURLOPT_POSTFIELDS] = http_build_query($fields);
+		return $this;
+	}
+
+	/**
+	 * Sets postfield body as a json
+	 *
+	 * @access	public
+	 * @param	array	$json		Json body
+	 * @return	Request
+	 */
+	public function postbody(array $json)
+	{
+		$this->options[CURLOPT_POSTFIELDS] = json_encode($json);
+		return $this;
 	}
 
 	/**
