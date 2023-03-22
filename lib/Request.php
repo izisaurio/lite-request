@@ -4,7 +4,7 @@ namespace LiteRequest;
 
 /**
  * Curl request
- * 
+ *
  * @author	izisaurio
  * @version	1
  */
@@ -74,6 +74,7 @@ class Request
 		$this->options = $options + [
 			CURLOPT_CUSTOMREQUEST => $this->type,
 			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_SSL_VERIFYPEER => false,
 		];
 	}
 
@@ -156,7 +157,11 @@ class Request
 	 */
 	public function headers(array $headers)
 	{
-		$this->options[CURLOPT_HTTPHEADER] = $headers;
+		$values = [];
+		foreach ($headers as $key => $value) {
+			$values[] = "{$key}: {$value}";
+		}
+		$this->options[CURLOPT_HTTPHEADER] = $values;
 		return $this;
 	}
 
