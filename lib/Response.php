@@ -65,6 +65,7 @@ class Response
 			$this->errorNo = \curl_errno($this->curl);
 			$this->error = \curl_error($this->curl);
 		}
+		\curl_close($this->curl);
 	}
 
 	/**

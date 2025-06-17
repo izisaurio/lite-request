@@ -239,6 +239,8 @@ class Request
 	public function execRaw() {
 		$this->curl = \curl_init($this->url);
 		\curl_setopt_array($this->curl, $this->options);
-		return \curl_exec($this->curl);
+		$response = \curl_exec($this->curl);
+		\curl_close($this->curl);
+		return $response;
 	}
 }
