@@ -2,13 +2,15 @@
 
 namespace LiteRequest;
 
+use CurlHandle;
+
 class Response
 {
 	/**
 	 * Curl
 	 *
 	 * @access  public
-	 * @var     resource
+	 * @var     CurlHandle
 	 */
 	public $curl;
 
@@ -55,7 +57,7 @@ class Response
 	{
 		$this->curl = $curl;
 		\curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, [
-			$this,
+			$this->curl,
 			'parseHeader',
 		]);
 		$this->body = \curl_exec($this->curl);
@@ -80,7 +82,7 @@ class Response
 	 * Parses response headers
 	 *
 	 * @access  private
-	 * @param   resource    $curl   Curl to exec
+	 * @param   CurlHandle    $curl   Curl to exec
 	 * @param   string      $header Header to parse
 	 * @return  int
 	 */

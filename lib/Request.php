@@ -2,6 +2,8 @@
 
 namespace LiteRequest;
 
+use CurlHandle, Closure;
+
 /**
  * Curl request
  *
@@ -14,7 +16,7 @@ class Request
 	 * Curl init resource
 	 *
 	 * @access	public
-	 * @var		resource
+	 * @var		CurlHandle
 	 */
 	public $curl;
 
@@ -192,6 +194,30 @@ class Request
 	}
 
 	/**
+	 * Add a writefunction option
+	 * 
+	 * @access	public
+	 * @param	Closure	$closure	This has two args, the Curlhandle and the data
+	 * @return	Request
+	 */
+	public function writefunction(Closure $closure)
+	{
+		$this->options[CURLOPT_WRITEFUNCTION] = $closure;	
+	}
+
+	/**
+	 * Add a headerfunction option
+	 * 
+	 * @access	public
+	 * @param	Closure	$closure	This has two args, the Curlhandle and the data
+	 * @return	Request
+	 */
+	public function headerfunction(Closure $closure)
+	{
+		$this->options[CURLOPT_HEADERFUNCTION] = $closure;
+	}
+
+	/**
 	 * Executes the curl and returns a response
 	 *
 	 * @access  public
@@ -202,5 +228,17 @@ class Request
 		$this->curl = \curl_init($this->url);
 		\curl_setopt_array($this->curl, $this->options);
 		return new Response($this->curl);
+	}
+
+	/**
+	 * Executes the curl and returns raw response
+	 * 
+	 * @access	public
+	 * @return	string|bool
+	 */
+	public function execRaw() {
+		$this->curl = \curl_init($this->url);
+		\curl_setopt_array($this->curl, $this->options);
+		return \curl_exec($this->curl);
 	}
 }
