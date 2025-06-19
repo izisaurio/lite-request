@@ -57,7 +57,7 @@ class Response
 	{
 		$this->curl = $curl;
 		\curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, [
-			$this->curl,
+			$this,
 			'parseHeader',
 		]);
 		$this->body = \curl_exec($this->curl);
